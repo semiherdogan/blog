@@ -8,7 +8,7 @@
             @endif
 
             <p class="text-gray-700 font-medium my-2">
-                {{ $featuredPost->getDate()->format('F j, Y') }}
+                {{ $featuredPost->getDateWithLocale('%B %d, %Y') }}
             </p>
 
             <h2 class="text-3xl mt-0">
@@ -20,7 +20,7 @@
             <p class="mt-0 mb-4">{!! $featuredPost->getExcerpt() !!}</p>
 
             <a href="{{ $featuredPost->getUrl() }}" title="Read - {{ $featuredPost->title }}" class="uppercase tracking-wide mb-4">
-                Read
+                DEVAMI
             </a>
         </div>
 
@@ -29,7 +29,7 @@
         @endif
     @endforeach
 
-    @include('_components.newsletter-signup')
+{{--    @include('_components.newsletter-signup')--}}
 
     @foreach ($posts->where('featured', false)->take(6)->chunk(2) as $row)
         <div class="flex flex-col md:flex-row md:-mx-6">

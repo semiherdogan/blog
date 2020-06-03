@@ -1,6 +1,6 @@
 <div class="flex flex-col mb-4">
     <p class="text-gray-700 font-medium my-2">
-        {{ $post->getDate()->format('F j, Y') }}
+        {{ $post->getDateWithLocale('%B %d, %Y') }}
     </p>
 
     <h2 class="text-3xl mt-0">
@@ -17,5 +17,5 @@
         href="{{ $post->getUrl() }}"
         title="Read more - {{ $post->title }}"
         class="uppercase font-semibold tracking-wide mb-2"
-    >Read</a>
+    >DEVAMI</a>
 </div>

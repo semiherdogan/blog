@@ -3,10 +3,10 @@
 use Illuminate\Support\Str;
 
 return [
-    'baseUrl' => '',
+    'baseUrl' => 'http://localhost:8000',
     'production' => false,
-    'siteName' => 'Semih\'s Blog',
-    'siteDescription' => 'Generate an elegant blog with Jigsaw',
+    'siteName' => 'Semih ERDOGAN',
+    'siteDescription' => 'semiherdogan.net',
     'siteAuthor' => 'Semih ERDOGAN',
 
     // collections
@@ -14,10 +14,10 @@ return [
         'posts' => [
             'author' => 'Semih ERDOGAN', // Default author, if not provided in a post
             'sort' => '-date',
-            'path' => 'blog/{filename}',
+            'path' => 'post/{filename}',
         ],
         'categories' => [
-            'path' => '/blog/categories/{filename}',
+            'path' => '/post/categories/{filename}',
             'posts' => function ($page, $allPosts) {
                 return $allPosts->filter(function ($post) use ($page) {
                     return $post->categories ? in_array($page->getFilename(), $post->categories, true) : false;
@@ -29,6 +29,10 @@ return [
     // helpers
     'getDate' => function ($page) {
         return Datetime::createFromFormat('U', $page->date);
+    },
+    'getDateWithLocale' => function ($page, $format = '%B %d, %Y') {
+        setlocale(LC_TIME, 'tr_TR.UTF-8');
+        return strftime($format, $page->date);
     },
     'getExcerpt' => function ($page, $length = 255) {
         if ($page->excerpt) {

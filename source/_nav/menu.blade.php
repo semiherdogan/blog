@@ -4,13 +4,15 @@
         Blog
     </a>
 
-    <a title="{{ $page->siteName }} About" href="/about"
+    <a title="{{ $page->siteName }} Hakkımda" href="/about"
         class="ml-6 text-gray-700 hover:text-blue-600 {{ $page->isActive('/about') ? 'active text-blue-600' : '' }}">
-        About
+        Hakkımda
     </a>
 
-    <a title="{{ $page->siteName }} Contact" href="/contact"
-        class="ml-6 text-gray-700 hover:text-blue-600 {{ $page->isActive('/contact') ? 'active text-blue-600' : '' }}">
-        Contact
+    <!--
+    <a title="{{ $page->siteName }} Snippets" href="/snippets"
+       class="ml-6 text-gray-700 hover:text-blue-600 {{ $page->isActive('/snippets') ? 'active text-blue-600' : '' }}">
+        Snippets
     </a>
+    -->
 </nav>
