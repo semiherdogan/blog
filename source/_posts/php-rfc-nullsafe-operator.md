@@ -7,7 +7,7 @@ description: PHP RFC Nullsafe operator
 featured: true
 ---
 
-Bugün [Php Rfc](https://wiki.php.net/rfc) sayfasını yeni neler gelecek acaba? niyetiyle 
+Bugün [Php Rfc](https://wiki.php.net/rfc) sayfasını "yeni neler gelecek acaba?" düşüncesiyle 
 gezindiğim sırada rastladığım ve bir çok programlama dilinde var olan _Nullsafe operator_'un 
 eklenmesi konusu ile karşılaştım.
 
