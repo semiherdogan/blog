@@ -8,5 +8,5 @@
 @endpush
 
 @section('body')
-    <h1>Snippets</h1>
+    <h1>Snippets.</h1>
 @endsection
