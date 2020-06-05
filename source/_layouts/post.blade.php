@@ -49,4 +49,8 @@
             @endif
         </div>
     </nav>
+
+    <div class="mt-12">
+        @include('_components.comment')
+    </div>
 @endsection
