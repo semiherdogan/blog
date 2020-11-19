@@ -1,7 +1,7 @@
 ---
 extends: _layouts.post
 section: content
-title: Yazılımcılar için scratchpad "Boop"
+title: 'Yazılımcılar İçin Scratchpad: "Boop"'
 date: 2020-07-16
 description: Yazılımcılar için scratchpad, boop.
 featured: true
@@ -54,10 +54,10 @@ Bunların yanı sıra "_custom_" olarak script yazıp dahil edebilmek de mümkü
 
 ### Neden başka bir araç?
 
-Bu işlemler için eskiden [Red](https://www.red-lang.org/) dilini kullanarak, repl üzerinde daha önceden yazdığım script'leri çalıştırarak, text işlerini rahat bir şekilde yapabiliyordum.
+Bu işlemler için eskiden [Red](https://www.red-lang.org/) dilini kullanarak, Repl üzerinde daha önceden yazdığım script'leri çalıştırarak, text işlerini rahat bir şekilde yapabiliyordum.
 
 Örnek olarak dublicate satır sayılarını aldığım script:
-```red
+```
 frequency: function [
     "Returns count of dublicated values in block"
     data [block!]
@@ -74,7 +74,7 @@ frequency: function [
 
 Kullanımı şöyle:
 
-```red
+```
 frequency [12 22 22 "selam" "dünyalı"]
 // > 12 1
      22 2
@@ -82,9 +82,9 @@ frequency [12 22 22 "selam" "dünyalı"]
      "dünyalı" 1
 ```
 
-Fakat **red**'in 32 bit olması ve macOS'un yeni versiyonlarında sadece 64 bit uygulama çalıştırması beni bu işlemleri yapabilecek yeni bir tool arayışına soktu. (Bir süre Docker ile çalıştırdım, fakat yavaş çalıştığından dolayı ondan da vazgeçtim.)
+Fakat **Red**'in 32 bit olması ve macOS'un yeni versiyonlarında sadece 64 bit uygulama çalıştırması beni bu işlemleri yapabilecek yeni bir tool arayışına soktu. (Bir süre Docker ile çalıştırdım, fakat yavaş çalıştığından dolayı ondan da vazgeçtim.)
 
-Bir dönem de **Ruby** yi denedim. (user.rb dosyasını repl'a yükleyerek çalıştırıyordum.)
+Bir dönem de **Ruby**'yi denedim. (user.rb dosyasını Repl'a yükleyerek çalıştırıyordum.)
 
 Örnek olarak en çok kullandığım 3 method:
 ```ruby
@@ -134,18 +134,18 @@ print(p)
 
 ### Peki Boop nasıl kullanılıyor?
 
-Boop'u açtıktan sonra, text yazabildiğiniz bir ekran karşılıyor sizi, bu ekrana textinizi ekledikten sonra `CMD + b` yaparak veya menüden `Scripts > Open Picker` tıklayarak işlem seçme ekranını açıyoruz, yapmak istediğimiz işlemi seçtiğimizde boop bizim için ilgili script'i çalıştırıp sonucunu ekrana getiriyor.
+Boop'u açtıktan sonra, text yazabildiğiniz bir ekran karşılıyor sizi, bu ekrana textinizi ekledikten sonra `CMD + b` yaparak veya menüden `Scripts > Open Picker` tıklayarak işlem seçme ekranını açıyoruz, yapmak istediğimiz işlemi seçtiğimizde Boop bizim için ilgili script'i çalıştırıp sonucunu ekrana getiriyor.
 
 ### Neden kullanmalıyım?
 
-Boop'un kendi sitesindeki sloganı bunu gayet güzel anlatıyor aslında "_Stop pasting company secrets into random websites!_".
+Boop'un kendi sitesindeki sloganı bunu gayet güzel anlatıyor aslında: "_Stop pasting company secrets into random websites!_" (Şirket sırlarını rastgele sitelere yapıştırmayı bırakın!)
 
-"Şirket sırlarını rastgele sitelere yapıştırmayı bırakın!"
-Örneğin api'den gelen bir json'ı formatlamak için, jwt, base64 decode için bu datayı alıp Google'da json beautifier aratıp bulup orada formatlama işlemini yapıyoruz. Boop içerisinde bunların hepsini yapabilirsiniz. Bu sayede rastgele websitelerine elinizdeki datayı vermeyi bırakabilirsiniz.
+Örneğin api'den gelen bir json'ı formatlamak için, jwt, base64 decode için bu datayı alıp Google'da *json beautifier* aratıp bulup orada formatlama işlemini yapıyoruz. Boop içerisinde bunların hepsini yapabilirsiniz. Bu sayede rastgele websitelerine elinizdeki datayı vermeyi bırakabilirsiniz.
 
 ### Custom script nasıl eklenir?
 
 Öncelikle dosyanızın en üstünde açıklama satırları içerisinde script'in ad, ikon gibi özellikleri json formatında tanımlamanız gerekiyor.
+
 Örnek olarak:
 ```javascript
 /**
@@ -160,8 +160,9 @@ Boop'un kendi sitesindeki sloganı bunu gayet güzel anlatıyor aslında "_Stop 
 **/
 ```
 
-Sonrasında main fonkisoyunu oluşturmaniz gerekiyor ve `main` fonksiyonu sayesinde ekranınıza yazığınız yazılar üzerinde istediğiniz değişikliği yapabiliyorsunuz. `main` fonksiyonu 1 parametre alıyor. Örnek olarak bu parametre adına `state` diyelim.
-`state` objesinin 3 property'si var.
+Sonrasında main fonkisoyunu oluşturmaniz gerekiyor ve `main` fonksiyonu sayesinde ekranınıza yazığınız yazılar üzerinde istediğiniz değişikliği yapabiliyorsunuz. `main` fonksiyonu 1 parametre alıyor. 
+
+Örnek olarak bu parametre adına `state` diyelim. `state` objesinin 3 property'si var:
 
 * fullText
 
@@ -215,14 +216,14 @@ Script'inizde herhangi bir değişiklik yaptığınızda menüden `Scripts > Rel
 
 ### Son Söz
 
-Bu uygulama ile ilgili daha ayrıntılı bilgiye [github](https://github.com/IvanMathy/Boop) sayfasından ulaşabilir, takıldığınız ya da eklemek istediğiniz bir şey olursa da aşağıya yorum olarak yazabilirsiniz.
+Bu uygulama ile ilgili daha ayrıntılı bilgiye [GitHub](https://github.com/IvanMathy/Boop) sayfasından ulaşabilir, takıldığınız ya da eklemek istediğiniz bir şey olursa da aşağıya yorum olarak yazabilirsiniz.
 
 
 ### İlgili linkler
 
-[Boop Github Repo](https://github.com/IvanMathy/Boop)
+[Boop GitHub Repo](https://github.com/IvanMathy/Boop)
 
-[Github Döküman](https://github.com/IvanMathy/Boop/blob/main/Boop/Documentation/Readme.md)
+[GitHub Döküman](https://github.com/IvanMathy/Boop/blob/main/Boop/Documentation/Readme.md)
 
 [Uygulama Websitesi](https://boop.okat.best/)
 
