@@ -1,0 +1,405 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>Semih ERDOGAN</title>
+    <link href="https://semiherdogan.net" />
+    <link type="application/atom+xml" rel="self" href="https://semiherdogan.net/blog/feed.atom" />
+    <updated>2022-04-25T18:17:16+00:00</updated>
+    <id>https://semiherdogan.net/blog/feed.atom</id>
+    <author>
+        <name>Semih ERDOGAN</name>
+    </author>
+                <entry>
+    <id>https://semiherdogan.net/post/yazilimcilar-icin-scratchpad-boop</id>
+    <link type="text/html" rel="alternate" href="https://semiherdogan.net/post/yazilimcilar-icin-scratchpad-boop" />
+    <title>Yazılımcılar İçin Scratchpad: &quot;Boop&quot;</title>
+    <published>2020-07-16T00:00:00+00:00</published>
+    <updated>2020-07-16T00:00:00+00:00</updated>
+    <author>
+        <name>Semih ERDOGAN</name>
+    </author>
+    <summary type="html">Geçenlerde GitHub&#039;da gezinirken denk geldiğim ve sonrasında text işlemleri için günlük olarak kullanmaya başladığım bir uygulamayı anlatacağım.
+
+Not: Bu uygulama sadece macOS üzerinde çalışmaktadır.
+
+
+
+Boop günlük text işlemlerini......</summary>
+    <content type="html"><![CDATA[
+        <p>Geçenlerde GitHub'da gezinirken denk geldiğim ve sonrasında <strong>text işlemleri</strong> için günlük olarak kullanmaya başladığım bir uygulamayı anlatacağım.</p>
+
+<p>Not: Bu uygulama sadece macOS üzerinde çalışmaktadır.</p>
+
+<h3>Boop nedir?</h3>
+
+<p>Boop günlük text işlemlerini (json formatlama, base64 encode/decode vs.) yapabilmek için elinizin altında bulundurabileceğiniz basit ama bir o kadar da güçlü bir text tool'dur. (Code editor değildir!)</p>
+
+<h3>Boop ile neler yapılabilir?</h3>
+
+<p>Boop'un güncel sürümü ile aşağıdaki işlemler yapılabiliyor:</p>
+
+<pre><code>AddSlashes
+Base64Decode
+Base64Encode
+CSVtoJSON
+CountCharacters
+CountLines
+DateToTimestamp
+DateToUTC
+Downcase
+FormatJSON
+FormatXML
+HTMLDecode
+HTMLEncode
+JSONtoCSV
+JWTDecode
+JsonToQuery
+MD5
+MarkdownQuote
+QueryToJson
+RemoveDuplicates
+RemoveSlashes
+ReverseLines
+ReverseString
+ShuffleLines
+URLDecode
+URLEncode
+Upcase
+</code></pre>
+
+<p>Bunların yanı sıra "<em>custom</em>" olarak script yazıp dahil edebilmek de mümkün. Özellikle bu custom script konusu benim için Boop'u kullanılabilir kıldı. (Custom script için <strong>javascript</strong> dili kullanılıyor.)</p>
+
+<h3>Neden başka bir araç?</h3>
+
+<p>Bu işlemler için eskiden <a href="https://www.red-lang.org/">Red</a> dilini kullanarak, Repl üzerinde daha önceden yazdığım script'leri çalıştırarak, text işlerini rahat bir şekilde yapabiliyordum.</p>
+
+<p>Örnek olarak dublicate satır sayılarını aldığım script:</p>
+
+<pre><code>frequency: function [
+    "Returns count of dublicated values in block"
+    data [block!]
+][
+    result: copy #()
+
+    foreach value data [
+        result/:value: either result/:value [result/:value + 1][1]
+    ]
+
+    result
+]
+</code></pre>
+
+<p>Kullanımı şöyle:</p>
+
+<pre><code>frequency [12 22 22 "selam" "dünyalı"]
+// &gt; 12 1
+     22 2
+     "selam" 1
+     "dünyalı" 1
+</code></pre>
+
+<p>Fakat <strong>Red</strong>'in 32 bit olması ve macOS'un yeni versiyonlarında sadece 64 bit uygulama çalıştırması beni bu işlemleri yapabilecek yeni bir tool arayışına soktu. (Bir süre Docker ile çalıştırdım, fakat yavaş çalıştığından dolayı ondan da vazgeçtim.)</p>
+
+<p>Bir dönem de <strong>Ruby</strong>'yi denedim. (user.rb dosyasını Repl'a yükleyerek çalıştırıyordum.)</p>
+
+<p>Örnek olarak en çok kullandığım 3 method:</p>
+
+<pre><code class="language-ruby">def read_clipboard
+    return `pbpaste`.strip
+end
+
+def write_clipboard(arg)
+    IO.popen('pbcopy', 'w') { |io| io.puts arg }
+end
+
+def parse_clipboard
+    return read_clipboard.split("\n").reject { |c|c.empty? }
+end
+</code></pre>
+
+<p>Tabi Ruby yerine elimdeki işi genelde Python ile çözmeye çalıştığım söylentileri doğrudur. :)</p>
+
+<p>Python'da random string generate etmek için kullandığım script:</p>
+
+<pre><code class="language-python">import string
+import random
+import pyperclip as clip
+
+def randomGenerator(size=6):
+    allowed_chars=string.ascii_letters + string.digits + '!#*-+'
+    return ''.join(random.choice(allowed_chars) for _ in range(size))
+
+def askInput():
+    global size
+    size = input('Length(10): ')
+    if size is '':
+        size = 10
+
+    try:
+        size = int(size)
+    except:
+        size = False
+
+size=0
+askInput()
+
+p = randomGenerator(size)
+clip.copy(p)
+print(p)
+</code></pre>
+
+<h3>Peki Boop nasıl kullanılıyor?</h3>
+
+<p>Boop'u açtıktan sonra, text yazabildiğiniz bir ekran karşılıyor sizi, bu ekrana textinizi ekledikten sonra <code>CMD + b</code> yaparak veya menüden <code>Scripts &gt; Open Picker</code> tıklayarak işlem seçme ekranını açıyoruz, yapmak istediğimiz işlemi seçtiğimizde Boop bizim için ilgili script'i çalıştırıp sonucunu ekrana getiriyor.</p>
+
+<h3>Neden kullanmalıyım?</h3>
+
+<p>Boop'un kendi sitesindeki sloganı bunu gayet güzel anlatıyor aslında: "<em>Stop pasting company secrets into random websites!</em>" (Şirket sırlarını rastgele sitelere yapıştırmayı bırakın!)</p>
+
+<p>Örneğin api'den gelen bir json'ı formatlamak için, jwt, base64 decode için bu datayı alıp Google'da <em>json beautifier</em> aratıp bulup orada formatlama işlemini yapıyoruz. Boop içerisinde bunların hepsini yapabilirsiniz. Bu sayede rastgele websitelerine elinizdeki datayı vermeyi bırakabilirsiniz.</p>
+
+<h3>Custom script nasıl eklenir?</h3>
+
+<p>Öncelikle dosyanızın en üstünde açıklama satırları içerisinde script'in ad, ikon gibi özellikleri json formatında tanımlamanız gerekiyor.</p>
+
+<p>Örnek olarak:</p>
+
+<pre><code class="language-javascript">/**
+    {
+        "api":1,
+        "name":"My new script",
+        "description":"Just a test script for my blog post",
+        "author":"Semih",
+        "icon":"collapse",
+        "tags":"script, test"
+    }
+**/
+</code></pre>
+
+<p>Sonrasında main fonkisoyunu oluşturmaniz gerekiyor ve <code>main</code> fonksiyonu sayesinde ekranınıza yazığınız yazılar üzerinde istediğiniz değişikliği yapabiliyorsunuz. <code>main</code> fonksiyonu 1 parametre alıyor.</p>
+
+<p>Örnek olarak bu parametre adına <code>state</code> diyelim. <code>state</code> objesinin 3 property'si var:</p>
+
+<ul>
+<li>fullText</li>
+</ul>
+
+<p><code>state.fullText</code> ekrana yapıştırmış olduğunuz tüm text'i verir.</p>
+
+<ul>
+<li>selection</li>
+</ul>
+
+<p><code>state.selection</code> text içerisinde seçmiş olduğunuz alanı verir ve yapacağınız text işlemleri sadece bu alana yansır.</p>
+
+<ul>
+<li>text</li>
+</ul>
+
+<p><code>state.text</code> benim favorim. Property seçili alan varsa onu döner, yoksa <code>fullText</code> olarak çalışır.</p>
+
+<p><strong>Mesaj olarak iki farklı seçenek mevcut:</strong></p>
+
+<ul>
+<li><p>Info</p>
+
+<p><code>state.postInfo</code> fonksiyonu ile arkaplanı mavi olan bir mesaj verebilirsiniz.</p></li>
+<li><p>Error</p>
+
+<p><code>state.postError</code> fonksiyonu ile arkaplanı kırmızı olan bir mesaj verebilirsiniz.</p></li>
+</ul>
+
+<p>Örnek olarak:</p>
+
+<pre><code class="language-javascript">function main(state) {
+  state.fullText = state.fullText + '\n' + randomString(10);
+
+  state.postInfo('Random string generated');
+}
+
+function randomString(length) {
+  const Characters       = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz123456789';
+  const CharactersLength = characters.length;
+
+  let result = '';
+
+  for (let i = 0; i &lt; length; i++) {
+    result += Characters.charAt(Math.floor(Math.random() * CharactersLength));
+  }
+
+  return result;
+}
+</code></pre>
+
+<p>Custom script'in son haline <a href="https://gist.github.com/semiherdogan/89f77553f4c57c84c4f0aa15b32bbe73">buradan</a> ulaşabilirsiniz.</p>
+
+<p>Bu script'i oluşturup kaydettikten sonra, Boop'da <strong>Preferences</strong>' e girerek <em>custom script klasörü</em>nü dosyanızın bulunduğu klasör olarak seçmeniz gerekiyor.</p>
+
+<p>Script'inizde herhangi bir değişiklik yaptığınızda menüden <code>Scripts &gt; Reload Scripts</code> 'e tıklamanız gerekiyor.</p>
+
+<h3>Son Söz</h3>
+
+<p>Bu uygulama ile ilgili daha ayrıntılı bilgiye <a href="https://github.com/IvanMathy/Boop">GitHub</a> sayfasından ulaşabilir, takıldığınız ya da eklemek istediğiniz bir şey olursa da aşağıya yorum olarak yazabilirsiniz.</p>
+
+<h3>İlgili linkler</h3>
+
+<p><a href="https://github.com/IvanMathy/Boop">Boop GitHub Repo</a></p>
+
+<p><a href="https://github.com/IvanMathy/Boop/blob/main/Boop/Documentation/Readme.md">GitHub Döküman</a></p>
+
+<p><a href="https://boop.okat.best/">Uygulama Websitesi</a></p>
+
+<p><a href="https://apps.apple.com/us/app/boop/id1518425043">App Store</a></p>
+    ]]></content>
+</entry>
+            <entry>
+    <id>https://semiherdogan.net/post/php-match-expression</id>
+    <link type="text/html" rel="alternate" href="https://semiherdogan.net/post/php-match-expression" />
+    <title>Php &quot;Match Expression&quot; kabul edildi</title>
+    <published>2020-07-12T00:00:00+00:00</published>
+    <updated>2020-07-12T00:00:00+00:00</updated>
+    <author>
+        <name>Semih ERDOGAN</name>
+    </author>
+    <summary type="html">Php &quot;Match Expression&quot; kabul edildi.
+8 versiyonu ile gelecek olan bu özellik sayesinde switch / case ile uzun uzun yazdığımız  kod bloğunu çok daha kısa bir hale getirerek daha kolay bir şekilde yazabileceğiz.
+
+Şu an bu şekilde yazıyor......</summary>
+    <content type="html"><![CDATA[
+        <p>Php "Match Expression" kabul edildi.
+8 versiyonu ile gelecek olan bu özellik sayesinde switch / case ile uzun uzun yazdığımız  kod bloğunu çok daha kısa bir hale getirerek daha kolay bir şekilde yazabileceğiz.</p>
+
+<p>Şu an bu şekilde yazıyor olduğumuz kod bloğunu:</p>
+
+<pre><code class="language-php">switch (1) {
+    case 0:
+        $result = 'Foo';
+        break;
+    case 1:
+        $result = 'Bar';
+        break;
+    case 2:
+        $result = 'Baz';
+        break;
+}
+
+echo $result;
+//&gt; Bar
+</code></pre>
+
+<p>Artık bu şekilde yazabileceğiz:</p>
+
+<pre><code class="language-php">echo match (1) {
+    0 =&gt; 'Foo',
+    1 =&gt; 'Bar',
+    2 =&gt; 'Baz',
+};
+//&gt; Bar
+</code></pre>
+
+<p>Match 'in Rust, F#, Scala gibi dillerdeki benzer implemantasyonlarını aşağıda görebilirsiniz.</p>
+
+<pre><code>// Rust
+let binary = match boolean {
+    false =&gt; 0,
+    true =&gt; 1,
+};
+
+// Scala
+val monthName = i match {
+    case 1  =&gt; "January"
+    case 2  =&gt; "February"
+    case 3  =&gt; "March"
+    ...
+    case _  =&gt; "Invalid month"
+}
+
+// F#
+let x = 
+    match 1 with 
+    | 1 -&gt; "a"
+    | 2 -&gt; "b"  
+    | _ -&gt; "z" 
+</code></pre>
+
+<p>Aralık ayında çıkacak olan php8 versiyonunu heyecanla beklemekteyiz.</p>
+
+<p>Rfc'yi incelemek için bu sayfayı ziyaret edebilirsiniz: <a href="https://wiki.php.net/rfc/match_expression_v2">rfc/match_expression</a></p>
+    ]]></content>
+</entry>
+            <entry>
+    <id>https://semiherdogan.net/post/php-rfc-nullsafe-operator</id>
+    <link type="text/html" rel="alternate" href="https://semiherdogan.net/post/php-rfc-nullsafe-operator" />
+    <title>Php Rfc Nullsafe operator</title>
+    <published>2020-06-03T00:00:00+00:00</published>
+    <updated>2020-06-03T00:00:00+00:00</updated>
+    <author>
+        <name>Semih ERDOGAN</name>
+    </author>
+    <summary type="html">Bugün Php Rfc sayfasını &quot;yeni neler gelecek acaba?&quot; düşüncesiyle 
+gezindiğim sırada rastladığım ve bir çok programlama dilinde var olan Nullsafe operator&#039;un 
+eklenmesi konusu ile karşılaştım.
+
+Nullsafe operator sayesinde bir değişkenin......</summary>
+    <content type="html"><![CDATA[
+        <p>Bugün <a href="https://wiki.php.net/rfc">Php Rfc</a> sayfasını "yeni neler gelecek acaba?" düşüncesiyle 
+gezindiğim sırada rastladığım ve bir çok programlama dilinde var olan <em>Nullsafe operator</em>'un 
+eklenmesi konusu ile karşılaştım.</p>
+
+<p><em>Nullsafe operator</em> sayesinde bir değişkenin <code>null</code> olup olmadığını, o değişkeni kullanmadan önce 
+kontrol etmemize gerek kalmayacak.</p>
+
+<p>Örnek olarak aşağıdaki gibi yazmaya çalıştığımız ve her satırında ayrı bir <code>null</code> kontrolu olan kodu</p>
+
+<pre><code class="language-php">$country =  null;
+
+if ($session !== null) {
+    $user = $session-&gt;user;
+
+    if ($user !== null) {
+        $address = $user-&gt;getAddress();
+
+        if ($address !== null) {
+            $country = $address-&gt;country;
+        }
+    }
+}
+</code></pre>
+
+<p>Nullsafe operator ile artık şöyle yazabileceğiz:</p>
+
+<pre><code class="language-php">$country = $session?-&gt;user?-&gt;getAddress()?-&gt;country;
+</code></pre>
+
+<p>Php 8 versiyonu için eklenme durumu henüz tartışma aşamasında olan bu özellik umuyorum ki kabul edilir.</p>
+
+<p>Rfc'yi incelemek için bu sayfayı ziyaret edebilirsiniz: <a href="https://wiki.php.net/rfc/nullsafe_operator">rfc/nullsafe_operator</a></p>
+    ]]></content>
+</entry>
+            <entry>
+    <id>https://semiherdogan.net/post/merhaba-dunya</id>
+    <link type="text/html" rel="alternate" href="https://semiherdogan.net/post/merhaba-dunya" />
+    <title>Merhaba Dünya</title>
+    <published>2020-06-02T00:00:00+00:00</published>
+    <updated>2020-06-02T00:00:00+00:00</updated>
+    <author>
+        <name>Semih ERDOGAN</name>
+    </author>
+    <summary type="html">Bu başlığı atmasam içimde kalırdı.
+
+Uzun zaman süren yazsam nasıl olur, yazmasam olmaz, ne anlatabilirim  düşüncelerinden sonra
+Dinçer&#039;in de vermiş olduğu gazla bloğumu açmış bulunmaktayım.
+
+Genel olarak yazılım konusunda......</summary>
+    <content type="html"><![CDATA[
+        <p>Bu başlığı atmasam içimde kalırdı.</p>
+
+<p>Uzun zaman süren yazsam nasıl olur, yazmasam olmaz, ne anlatabilirim  düşüncelerinden sonra
+<a href="http://dincer.info">Dinçer</a>'in de vermiş olduğu gazla bloğumu açmış bulunmaktayım.</p>
+
+<p>Genel olarak yazılım konusunda tecrübelerimi, 
+kullandığım ya da yeni bulduğum araçları paylaşmayı planlıyorum.</p>
+
+<p>Görüşmek üzere.</p>
+    ]]></content>
+</entry>
+    </feed>
